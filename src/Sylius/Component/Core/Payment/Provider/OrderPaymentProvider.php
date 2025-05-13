@@ -26,6 +26,9 @@ use Webmozart\Assert\Assert;
 
 final class OrderPaymentProvider implements OrderPaymentProviderInterface
 {
+    /****
+     * Initializes the OrderPaymentProvider with dependencies for payment method resolution, payment creation, and state management.
+     */
     public function __construct(
         private DefaultPaymentMethodResolverInterface $defaultPaymentMethodResolver,
         private PaymentFactoryInterface $paymentFactory,
@@ -33,7 +36,18 @@ final class OrderPaymentProvider implements OrderPaymentProviderInterface
     ) {
     }
 
-    public function provideOrderPayment(OrderInterface $order, string $targetState): ?PaymentInterface
+    /**
+     * Creates a new payment for the given order, assigns an appropriate payment method, transitions it to the specified state, and returns the payment.
+     *
+     * Throws NotProvidedOrderPaymentException if no suitable payment method can be determined.
+     *
+     * @param OrderInterface $order The order for which the payment is created.
+     * @param string $targetState The desired state to transition the payment to.
+     * @return PaymentInterface The prepared payment instance.
+     *
+     * @throws NotProvidedOrderPaymentException If no payment method is available for the order.
+     */
+    public function provideOrderPayment(OrderInterface $order, string $targetState): PaymentInterface
     {
         /** @var PaymentInterface $payment */
         $payment = $this->paymentFactory->createWithAmountAndCurrencyCode(

@@ -19,16 +19,13 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\PercentToLocalizedStri
 final class PercentFloatToLocalizedStringTransformer extends PercentToLocalizedStringTransformer
 {
     /**
-     * Transforms between a percentage value into a float
+     * Converts a numeric percentage value to a float, or returns null if the input is not numeric.
      *
-     * @param string $value Percentage value
-     *
-     * @return float Normalized value
-     *
-     * @throws TransformationFailedException if the given value is not a string or
-     *                                       if the value could not be transformed
+     * @param mixed $value The percentage value to convert.
+     * @return float|null The converted float value, or null if input is not numeric.
+     * @throws TransformationFailedException If the parent transformation fails.
      */
-    public function reverseTransform(mixed $value): float|int|null
+    public function reverseTransform(mixed $value): ?float
     {
         if (!is_numeric($value)) {
             return null;

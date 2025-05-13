@@ -27,6 +27,11 @@ final class LocaleExtension extends AbstractExtension
     ) {
     }
 
+    /**
+     * Returns the list of Twig filters provided by this extension for locale name and country code conversion.
+     *
+     * @return TwigFilter[] Array of Twig filters for locale-related transformations.
+     */
     public function getFilters(): array
     {
         return [
@@ -35,7 +40,14 @@ final class LocaleExtension extends AbstractExtension
         ];
     }
 
-    public function convertCodeToName(string $code, ?string $localeCode = null): ?string
+    /**
+     * Converts a locale code to its human-readable name, returning the original code if conversion fails.
+     *
+     * @param string $code The locale code to convert.
+     * @param string|null $localeCode Optional locale code to use for the conversion context.
+     * @return string The human-readable locale name, or the original code if conversion is not possible.
+     */
+    public function convertCodeToName(string $code, ?string $localeCode = null): string
     {
         try {
             return $this->localeConverter->convertCodeToName($code, $this->getLocaleCode($localeCode));

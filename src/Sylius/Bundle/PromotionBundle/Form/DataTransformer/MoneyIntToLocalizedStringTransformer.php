@@ -17,7 +17,15 @@ use Symfony\Component\Form\Extension\Core\DataTransformer\MoneyToLocalizedString
 
 final class MoneyIntToLocalizedStringTransformer extends MoneyToLocalizedStringTransformer
 {
-    public function reverseTransform(mixed $value): float|int|null
+    /**
+     * Converts a localized string or numeric value to an integer monetary amount.
+     *
+     * Returns null if the input is not numeric; otherwise, transforms the value using the parent transformer and casts the result to an integer.
+     *
+     * @param mixed $value The value to be transformed.
+     * @return int|null The integer monetary amount, or null if input is not numeric.
+     */
+    public function reverseTransform(mixed $value): ?int
     {
         if (!is_numeric($value)) {
             return null;
